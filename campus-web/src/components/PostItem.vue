@@ -5,7 +5,7 @@
       {{ title }}
     </h2>
     <div class="content" :class="{ detail: isDetailPage }" @click="jumpPostDetail">
-      <p v-html="content"></p>
+      <p v-html="content.replace(/(\r\n|\n|\r)/gm, '<br />')"></p>
     </div>
     <div class="footer">
       <!-- 点赞 -->

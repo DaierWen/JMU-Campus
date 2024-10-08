@@ -110,7 +110,7 @@ const registerFromSetting = reactive([
     }
   },
   {
-    label: '用户账号',
+    label: '登录账号',
     prop: 'username',
     inputArr: {
       type: 'text',
