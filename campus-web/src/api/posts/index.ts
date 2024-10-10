@@ -147,3 +147,13 @@ export function getTopicPost(topicName: string) {
     }
   })
 }
+
+// 获取置顶帖子
+export function getTopTopic(userId: number) {
+  return http.request({
+    url: '/post/user/top',
+    params: {
+      userId
+    }
+  })
+}
