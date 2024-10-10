@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <div class="user-image">
+    <div class="user-image" @click="router.push('/personalHomepage')">
       <el-avatar :src="avatarUrl"></el-avatar>
     </div>
     <div class="user-info">
@@ -12,6 +12,8 @@
 
 <script setup lang="ts">
 import { handleTime } from '@/utils/common.ts'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 interface Props {
   avatarUrl: string
   nickname: string
@@ -26,8 +28,12 @@ defineProps<Props>()
   align-items: center;
   .user-image {
     margin-right: 0.5em;
+
     &:deep(.el-avatar) {
       vertical-align: bottom;
+    }
+    &:hover {
+      cursor: pointer;
     }
   }
   .user-info {

@@ -85,7 +85,7 @@ export function checkPost(postId: number, decision: number) {
 }
 
 // 删除帖子
-export function deletePost(postId: string) {
+export function deletePost(postId: number) {
   return http.request({
     method: 'post',
     url: '/post/delete',

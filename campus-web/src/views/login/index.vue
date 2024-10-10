@@ -9,8 +9,8 @@
           <el-input v-model="loginForm[item.prop]" v-bind="item.inputArr" />
         </el-form-item>
         <div style="display: flex; justify-content: center">
-            <el-button type="primary"  @click="login">登录</el-button>
-            <el-button plain type="primary" @click="goRegister">注册</el-button>
+          <el-button type="primary" @click="login">登录</el-button>
+          <el-button plain type="primary" @click="goRegister">注册</el-button>
         </div>
       </el-form>
     </el-card>

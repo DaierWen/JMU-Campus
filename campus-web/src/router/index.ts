@@ -29,6 +29,11 @@ const router = createRouter({
           component: () => import('@/views/account/index.vue')
         },
         {
+          path: '/personalHomepage',
+          name: 'personalHomepage',
+          component: () => import('@/views/personalHomepage/index.vue')
+        },
+        {
           path: '/history/:userId',
           name: 'history',
           component: () => import('@/views/history/index.vue')

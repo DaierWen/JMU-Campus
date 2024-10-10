@@ -1,7 +1,6 @@
 <template>
   <div class="editor">
-    <el-input placeholder="今天想分享点什么呢?" class="edit-input" v-model="post.content"
-      type="textarea" />
+    <el-input placeholder="今天想分享点什么呢?" class="edit-input" v-model="post.content" type="textarea" />
     <!-- <div style="border: 1px solid #ccc">
       <div id="editor—wrapper">
         <div id="toolbar-container"> 工具栏</div>
@@ -32,8 +31,12 @@
       <Vote ref="voteRef"></Vote>
     </div>
     <div>
-      是否私密
-      <el-switch v-model="isPublic" />
+      是否匿名
+      <el-switch v-model="post.isAnonymous" :active-value="1" :inactive-value="0" />
+    </div>
+    <div>
+      是否置顶
+      <el-switch v-model="post.isTop" :active-value="1" :inactive-value="0" />
     </div>
     <el-button type="success" @click="publish">发布</el-button>
   </div>
@@ -48,7 +51,9 @@ import Vote from '@/components/Vote.vue'
 import { useFetchTopic } from '@/hooks/useFetchTopic.ts'
 
 const post = reactive({
-  content: ''
+  content: '',
+  isAnonymous: 0,//是否匿名
+  isTop: 0//是否置顶
 })
 // const { createEditor, createToolbar } = window.wangEditor
 // 富文本相关
@@ -79,7 +84,6 @@ onMounted(() => {
 // }
 const isAddTopic = ref(false)
 const isAddVote = ref(false)
-const isPublic = ref(false)
 const voteRef = ref(null)
 const topic = ref<string[]>([])
 let topicList: any = useFetchTopic()
