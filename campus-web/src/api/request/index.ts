@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { ElMessage, ElLoading } from 'element-plus'
 import { localCache } from '@/utils/cache'
 
-let loadingInstance:any = null
+let loadingInstance: any = null
 let requestNum = 0
 
 const addLoading = () => {
@@ -70,7 +70,8 @@ export const createAxiosByinterceptors = (config?: AxiosRequestConfig): AxiosIns
     function (response) {
       // 对响应数据做点什么
       console.log('response:', response)
-      const { loading = true, method } = response.config
+      // const { loading = true, method } = response.config
+      const loading = true
       if (loading) cancelLoading()
       const { code, message } = response.data
       // config设置responseType为blob 处理文件下载

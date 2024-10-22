@@ -98,8 +98,6 @@ const likeFn = async (isCancel: Boolean) => {
   if (res.status) {
     sucMessage(res.message)
   }
-  console.log(isCancel, 'isCancel');
-
   if (isCancel) {
     const userId = localCache.getCache('login')?.userInfo.id
     userLikeList.value?.forEach((item, index) => {
@@ -112,8 +110,7 @@ const likeFn = async (isCancel: Boolean) => {
     const { id, nickname, avatarUrl, sex } = user
     if (userLikeList.value) {
       userLikeList.value?.push({ id, nickname, avatarUrl, sex })
-      console.log(userLikeList.value);
-    }else {
+    } else {
       userLikeList.value = [{ id, nickname, avatarUrl, sex }]
     }
   }
