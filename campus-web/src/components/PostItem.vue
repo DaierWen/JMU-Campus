@@ -1,9 +1,9 @@
 <template>
   <div class="post-item">
     <UserInfo v-bind="userInfo" :create-time="createTime"></UserInfo>
-    <h2 class="title" @click="jumpPostDetail">
+    <!-- <h2 class="title" @click="jumpPostDetail">
       {{ title }}
-    </h2>
+    </h2> -->
     <div class="content" :class="{ detail: isDetailPage }" @click="jumpPostDetail">
       <p v-html="content.replace(/(\r\n|\n|\r)/gm, '<br />')"></p>
     </div>
@@ -64,7 +64,7 @@ interface voteMessageInter {
 interface Props {
   id: number
   userInfo: postItemUserInfo
-  title: string // 后期补一下title属性
+  // title: string // 后期补一下title属性
   content: string
   viewNum: number
   imgList?: null | string[]

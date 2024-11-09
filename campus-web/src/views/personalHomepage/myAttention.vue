@@ -1,6 +1,12 @@
 <template>
     <div class="myAttention">
         <div class="myAttention-title">关注的人</div>
+        <div class="myAttention-list">
+            <div class="myAttention-list-title">全部关注</div>
+            <div class="myAttention-list-item">
+                <div class="left-avatar"></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -36,6 +42,17 @@ onMounted(() => {
         line-height: 44px;
         padding-left: 15px;
         color: #ff8200;
+    }
+
+    .myAttention-list {
+        background-color: #fff;
+        margin-top: 10px;
+
+        .myAttention-list-title {
+            height: 44px;
+            padding: 0  10px;
+            line-height: 44px;
+        }
     }
 }
 </style>

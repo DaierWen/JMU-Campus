@@ -9,7 +9,8 @@
         <div>{{ handleTime(createTime) }}</div>
       </div>
     </div>
-    <el-button v-if="id !== -1" color="#ff8200" plain size="small" icon="Plus" @click="attention(id)">关注</el-button>
+    <el-button v-if="id !== -1 && userInfo.id !== id" color="#ff8200" plain size="small" icon="Plus"
+      @click="attention(id)">关注</el-button>
   </div>
 </template>
 
@@ -18,6 +19,8 @@ import { handleTime } from '@/utils/common.ts'
 import { useRouter } from 'vue-router'
 import { postUserFollow } from '@/api/comments/index.ts'
 import { sucMessage } from '@/utils/common'
+import { useUserStore } from '@/stores/userStore'
+const userInfo = useUserStore().userInfo
 
 const router = useRouter()
 interface Props {

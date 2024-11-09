@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { ElMessage, ElLoading } from 'element-plus'
+import { ElMessage, ElLoading, ElMessageBox } from 'element-plus'
 import { localCache } from '@/utils/cache'
 
 let loadingInstance: any = null
@@ -70,7 +70,6 @@ export const createAxiosByinterceptors = (config?: AxiosRequestConfig): AxiosIns
     function (response) {
       // 对响应数据做点什么
       console.log('response:', response)
-      // const { loading = true, method } = response.config
       const loading = true
       if (loading) cancelLoading()
       const { code, message } = response.data
@@ -79,15 +78,13 @@ export const createAxiosByinterceptors = (config?: AxiosRequestConfig): AxiosIns
         // return downloadFile(response)
       } else {
         if (code <= 299 && code >= 200) {
-          // if (method === 'post' && loading) {
-          //   ElMessage({ message, type: 'success', duration: 1000 }) // post弹出消息提示
-          // }
           return response.data
         } else {
           ElMessage.error(message)
           return Promise.reject(response.data)
         }
       }
+
     },
     function (error) {
       // 对响应错误做点什么
@@ -96,7 +93,31 @@ export const createAxiosByinterceptors = (config?: AxiosRequestConfig): AxiosIns
       console.log('error-request:', error.request)
       const { loading = true } = error.config
       if (loading) cancelLoading()
-      ElMessage.error(error?.response?.data?.message || '服务端异常')
+      if (error.response.status === 511) {
+        // ElMessageBox.confirm(
+        //   '登录状态已过期，您可以继续留在该页面，或者重新登录',
+        //   'Warning',
+        //   {
+        //     confirmButtonText: '重新登录',
+        //     cancelButtonText: '取消',
+        //     type: 'warning',
+        //   }
+        // )
+        //   .then(() => {
+        //     ElMessage({
+        //       type: 'success',
+        //       message: '重新登录',
+        //     })
+        //   })
+        //   .catch(() => {
+        //     ElMessage({
+        //       type: 'info',
+        //       message: '取消',
+        //     })
+        //   })
+      } else {
+        ElMessage.error(error?.response?.data?.message || '服务端异常')
+      }
       return Promise.reject(error)
     }
   )
