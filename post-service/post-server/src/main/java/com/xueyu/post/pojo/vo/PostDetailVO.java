@@ -60,14 +60,14 @@ public class PostDetailVO {
 	VoteVO voteMessage;
 
 	/**
-	 * 评论列表
-	 */
-	Object commentList;
-
-	/**
 	 * 帖子话题
 	 */
 	List<Topic> topics;
+
+	/**
+	 * 点赞用户列表
+	 */
+	List<UserSimpleVO> userLikeList;
 
 	/**
 	 * 是否点赞了该帖子 true 为已点赞，未登录或未点赞为 false

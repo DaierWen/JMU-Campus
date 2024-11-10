@@ -1,6 +1,7 @@
 package com.xueyu.post.facade;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.xueyu.comment.client.CommentClient;
 import com.xueyu.comment.request.PostCommentQueryRequest;
 import com.xueyu.comment.sdk.vo.CommentPostVO;
@@ -27,6 +28,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 处理帖子详情相关信息整合
@@ -77,6 +81,15 @@ public class ConvertPostDetailFacade implements FacadeStrategy<ConvertDetailReq,
         } else {
             postDetailVO.setIsLike(false);
         }
+        // 设置点赞用户信息
+        LambdaQueryWrapper<LikePost> likeWrapper = new LambdaQueryWrapper<>();
+        likeWrapper.eq(LikePost::getPostId, postId);
+        List<LikePost> likePosts = likePostMapper.selectList(likeWrapper);
+        if (CollectionUtils.isNotEmpty(likePosts)){
+            List<Integer> likeUserIds = likePosts.stream().map(LikePost::getUserId).collect(Collectors.toList());
+            List<UserSimpleVO> userInfos = userClient.getUserDeatilInfoList(likeUserIds).getData();
+            postDetailVO.setUserLikeList(userInfos);
+        }
         // 查询并设置作者信息
         // 设置帖子用户信息
         if (PostIsAnonymousEnum.YES.getValue().equals(postView.getIsAnonymous())){
@@ -88,13 +101,6 @@ public class ConvertPostDetailFacade implements FacadeStrategy<ConvertDetailReq,
         PostCommentQueryRequest request = new PostCommentQueryRequest();
         request.setPostId(postId);
         request.setUserId(userId);
-        // todo 后期抽离，前端单独查询评论
-        RestResult<ListVO<CommentPostVO>> postCommentList = commentClient.getPostCommentList(request);
-        if (postCommentList.getStatus()){
-            postDetailVO.setCommentList(postCommentList.getData().getRecords());
-        }else {
-            log.error("postId ->{}, 评论获取异常", postId);
-        }
         // 查询携带的话题
         postDetailVO.setTopics(topicMapper.selectByPostId(postId));
         // 设置投票信息
