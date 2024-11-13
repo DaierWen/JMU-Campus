@@ -2,10 +2,10 @@ import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { ElMessage, ElLoading, ElMessageBox } from 'element-plus'
 import { localCache } from '@/utils/cache'
-
+import { useUserStore } from '@/stores/userStore.ts'
 let loadingInstance: any = null
 let requestNum = 0
-
+// const userStore = useUserStore()
 const addLoading = () => {
   // 增加loading 如果pending请求数量等于1，弹出loading, 防止重复弹出
   requestNum++
@@ -94,27 +94,8 @@ export const createAxiosByinterceptors = (config?: AxiosRequestConfig): AxiosIns
       const { loading = true } = error.config
       if (loading) cancelLoading()
       if (error.response.status === 511) {
-        // ElMessageBox.confirm(
-        //   '登录状态已过期，您可以继续留在该页面，或者重新登录',
-        //   'Warning',
-        //   {
-        //     confirmButtonText: '重新登录',
-        //     cancelButtonText: '取消',
-        //     type: 'warning',
-        //   }
-        // )
-        //   .then(() => {
-        //     ElMessage({
-        //       type: 'success',
-        //       message: '重新登录',
-        //     })
-        //   })
-        //   .catch(() => {
-        //     ElMessage({
-        //       type: 'info',
-        //       message: '取消',
-        //     })
-        //   })
+        ElMessage.error('登录状态已过期，请重新登录')
+        useUserStore().logoutFn()
       } else {
         ElMessage.error(error?.response?.data?.message || '服务端异常')
       }

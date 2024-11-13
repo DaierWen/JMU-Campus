@@ -46,8 +46,8 @@
           <div class="publish" @click="handlePublish">发布</div>
           <el-dialog v-model="publishDialog" title="快捷发布" width="640">
             <div class="publishContent">
-              <el-input v-model="textarea2" :autosize="{ minRows: 2 }" type="textarea" autofocus 
-                show-word-limit placeholder="有什么新鲜事分享给大家?" :maxlength="maxLength"  />
+              <el-input v-model="textarea2" :autosize="{ minRows: 2 }" type="textarea" autofocus show-word-limit
+                placeholder="有什么新鲜事分享给大家?" :maxlength="maxLength" />
             </div>
           </el-dialog>
         </div>
