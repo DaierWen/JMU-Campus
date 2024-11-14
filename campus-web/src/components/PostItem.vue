@@ -43,6 +43,7 @@ interface postItemUserInfo {
   nickname: string
   avatarUrl: string
   sex: number
+  isMutual:number
 }
 interface voteOption {
   optionId: number

@@ -9,8 +9,8 @@
         <div>{{ handleTime(createTime) }}</div>
       </div>
     </div>
-    <el-button v-if="id !== -1 && userInfo.id !== id" color="#ff8200" plain size="small" icon="Plus"
-      @click="attention(id)">关注</el-button>
+    <el-button v-if="id !== -1 && userInfo.id !== id && userInfo.id" color="#ff8200" plain size="small" icon="Plus"
+      @click="attention(id)" :disabled="isMutual === 1">{{ isMutual === 1 ? '已关注' : '关注' }}</el-button>
   </div>
 </template>
 
@@ -28,6 +28,7 @@ interface Props {
   nickname: string
   createTime: string
   id: number
+  isMutual: number
 }
 defineProps<Props>()
 const attention = async (id: number) => {
